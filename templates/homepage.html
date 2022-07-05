@@ -2,12 +2,15 @@
 
 {% block content %}
 
+<!-- Szablon strony głównej  -->
 <div class="row">
    <div class="col-lg-12 text-center">
        <h1 class="mt-5">Witaj w mojej bibliotece filmów</h1>
        <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
    </div>
+   <!-- Pętla wyświetlająca cards do wielu filmów -->
    {% for movie in movies %}
+   <!-- col-lg-3: na dużych ekranach 3 kolumny +  na średnich 6 + margines 4  -->
    <div class="col-lg-3 col-md-6 mb-4">
        <div class="card h-100">
            <img class="card-img-top" src="http://placehold.it/300x500" alt="">
