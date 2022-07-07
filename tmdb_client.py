@@ -19,7 +19,7 @@ def get_popular_movies(): # funkcja która zwraca pełną listę popularnych fil
     # 3/ file_path ( tu jest "poster_api_path" - opis dalej ) - ścieżka do pliku (  "poster_path": "/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg"< podawana jest w JSON - który ściągany jest pezez def get_popular_movies(): - 
 
 
-def get_poster_url(poster_api_path, size="w342"): ### ??? JAKIE JEST ŹRÓDŁO "poster_api_path"  ### funkcja, która potrafi stworzyć działający adres do obrazka # MOJE UWAGI: podczas wywoływania funkcji podawany jest tylko argument "poster_api_path" - reszta jest juz w funkcji
+def get_poster_url(poster_api_path, size="w342"): ### funkcja, która potrafi stworzyć działający adres do obrazka # MOJE UWAGI: podczas wywoływania funkcji podawany jest tylko argument "poster_api_path" - reszta jest juz w funkcji
     base_url = "https://image.tmdb.org/t/p/"
     return f"{base_url}{size}/{poster_api_path}"
 
@@ -29,4 +29,4 @@ def get_movies(how_many):
     data = get_popular_movies()
     print("abc",flush=True)
     print(data,flush=True)
-    return data["results"][:how_many]
+    return data["results"][:how_many] # wywołanie ze słownika  zagnieżdżonego  za pomocą metody: nazwa zmiennej['nazwa klucza'][nr indeksu w  LIŚCIE obiektów]
