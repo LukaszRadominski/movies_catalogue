@@ -1,13 +1,12 @@
-from flask import Flask, render_template
-import tmdb_client
+from flask import Flask, render_template, request
+import tmdb_client, random
 
 app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    movies = tmdb_client.get_movies(8) # maksymalnie 8 filmów
+    movies = tmdb_client.get_movies(how_many=8) # maksymalnie 8 filmów
     return render_template("homepage.html", movies=movies) # wyświetla szablon html, w którym zmienna movies przejmuje argumenty zmiennej movies z main.py
-
 
 # pozwala on na wstrzyknięcie do kontekstu każdego szablonu dodatkowych danych lub obiektów, by nie robić tego za każdym razem w widoku
 # Teraz każdy szablon będzie miał dostępny obiekt o nazwie tmdb_image_url, czyli funkcję, która przyjmuje dwa parametry: path oraz size.
@@ -21,9 +20,8 @@ def utility_processor():
 
 # moja funkcja ..................ma powstać słownik zawierający tytuł i URL do plakatu  ## iteracja przez zagnieżdżone słowniki
 # # mam otrzymać {"title": "URL"} 
-## OK  otwórz postman 
 ##??? zamiast"backdrop_path" >> "poster_path" ????? 
-
+## ??? gdzie wykorzystać get_movie-info
 
 def get_movie_info():
     movies_two =  tmdb_client.get_popular_movies() # otrzymuję słownik - JSON  o kluczach "page", "results", 
@@ -37,9 +35,6 @@ def get_movie_info():
     return my_dict
 
 
-
-
-
 # PRZYKŁAD inny 
 # def get_movie_info():
 #    movies =  tmdb_client.get_popular_movies(8)
@@ -47,6 +42,17 @@ def get_movie_info():
 #        keys = ["title", "backdrop_path"]
 #        dict2 = {x:titles_dict[x] for x in keys}
 #        return dict2
+
+
+
+
+@app.route("/movie/<movie_id>")
+def movie_details(movie_id): 
+    details = tmdb_client.get_single_movie(movie_id)
+    cast = tmdb_client.get_single_movie_cast(movie_id)
+    movie_images = tmdb_client.get_movie_images(movie_id)
+    selected_backdrop = random.choice(movie_images['backdrops'])
+    return render_template("movie_details.html", movie=details, cast=cast) 
 
 if __name__ == '__main__':
     app.run(debug=True)
