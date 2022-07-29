@@ -3,10 +3,20 @@ import tmdb_client, random
 
 app = Flask(__name__)
 
+FILTERS = ["popular", "upcoming", "now_playing", "top_rated"] # lista stałych argumetów - wystepujacych w poszczególych API 
+
 @app.route('/')
 def homepage():
-    movies = tmdb_client.get_movies(how_many=8) # maksymalnie 8 filmów
-    return render_template("homepage.html", movies=movies) # wyświetla szablon html, w którym zmienna movies przejmuje argumenty zmiennej movies z main.py
+    selected_list = request.args.get('list_type', "popular")  # maksymalnie 8 filmów ## request.args.get> zwraca 1 obiekt tu akurat dictionary key / value
+    if selected_list not in FILTERS: # jeżeli wybrany typ listy nie występuje w FILTERS ( np użytkownik wpisze w url inną wartość) wówczas domyślna lista będzie "popular"
+        selected_list = "popular"
+    movies = tmdb_client.get_movies(how_many=8, list_type=selected_list)
+    return render_template("homepage.html", movies=movies, current_list=selected_list, filters=FILTERS) # wyświetla szablon html, w którym zmienna movies przejmuje argumenty zmiennej movies z main.py
+
+## wczesniejsza wersja powyższej funkcji 
+#def homepage():
+#    movies = tmdb_client.get_movies(8) # maksymalnie 8 filmów
+#    return render_template("homepage.html", movies=movies) # wyświetla szablon html, w którym zmienna movies przejmuje argumenty zmiennej movies z main.py
 
 # pozwala on na wstrzyknięcie do kontekstu każdego szablonu dodatkowych danych lub obiektów, by nie robić tego za każdym razem w widoku
 # Teraz każdy szablon będzie miał dostępny obiekt o nazwie tmdb_image_url, czyli funkcję, która przyjmuje dwa parametry: path oraz size.
@@ -18,7 +28,7 @@ def utility_processor():
 
 
 
-# moja funkcja ..................ma powstać słownik zawierający tytuł i URL do plakatu  ## iteracja przez zagnieżdżone słowniki
+## iteracja przez zagnieżdżone słowniki
 # # mam otrzymać {"title": "URL"} 
 ##??? zamiast"backdrop_path" >> "poster_path" ????? 
 ## ??? gdzie wykorzystać get_movie-info

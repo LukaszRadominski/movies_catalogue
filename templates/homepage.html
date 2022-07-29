@@ -8,6 +8,18 @@
        <h1 class="mt-5">Witaj w mojej bibliotece filmów</h1>
        <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
    </div>
+
+<!--   if statement wewnątrz class -->
+<!-- dla wybranej listy : class="btn btn-primary" -->
+<!-- dla innej listy : class="btn btn-secondary" -->
+<!-- https://getbootstrap.com/docs/4.0/components/buttons/ -->
+<div class="col-lg-12 mb-4">
+    {% for filter in filters %}
+    <a href="{{ url_for('homepage', list_type=filter) }}"
+    class="btn btn-outline-info {% if current_list==filter %} btn-primary {% else %} btn-secondary {% endif %} " >{{ filter }}</a>
+    {% endfor %}
+
+</div>   
    <!-- Pętla wyświetlająca cards do wielu filmów -->
    {% for movie in movies %}
    <!-- col-lg-3: na dużych ekranach 3 kolumny +  na średnich 6 + margines 4  -->

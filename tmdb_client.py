@@ -20,7 +20,7 @@ def get_movies_list(list_type):
         "Authorization": f"Bearer {API_TOKEN}"
     }
     response = requests.get(endpoint, headers=headers)
-    response.raise_for_status() # eśli odpowiedź od API zakończy się czymkolwiek innym niż sukcesem – aplikacja zwróci wyjątek. Dzięki temu możemy mieć pewność, że operujemy tylko i wyłącznie na poprawnych danych pobranych z API
+    response.raise_for_status() # jeśli odpowiedź od API zakończy się czymkolwiek innym niż sukcesem – aplikacja zwróci wyjątek. Dzięki temu możemy mieć pewność, że operujemy tylko i wyłącznie na poprawnych danych pobranych z API
     return response.json()
 
 # poniżej funkcja do tworzenia adresu do obrazka; adres  składa się z 3 elementów:
@@ -35,11 +35,11 @@ def get_poster_url(poster_api_path, size="w342"): ### funkcja, która potrafi st
 
 
 # wykorzystywane w main.py > aby funkcja odpowiedzialna za stronę główną, jedynie pobierała odpowiednią liczbę filmów, którą chcemy pokazać
-def get_movies(how_many):  
+def get_movies(how_many,list_type):  
     # data = get_popular_movies()
-    data = get_movies_list("popular") # zamiast get_popular_movies() > do zmiennej data przekazywany jest wynik funkcji get_movies_list (czyli filmy wg API "popular" albo "top_rated" albo "upcoming" albo "now_playing" <czyli rożne typy list dostępnych w testowanych API>, w zalezności od tego co jest przekazywane jako parametr funkcji (obecnie "popular"))
-    print("abc",flush=True)
-    # print(data,flush=True)
+    data = get_movies_list('popular' if list_type is None else list_type) # zamiast get_popular_movies() > do zmiennej data przekazywany jest wynik funkcji get_movies_list (czyli filmy wg API "popular" albo "top_rated" albo "upcoming" albo "now_playing" <czyli rożne typy list dostępnych w testowanych API>, w zalezności od tego co jest przekazywane jako parametr funkcji (obecnie "popular" jeżeli list_type nie istnieje  a jeżeli listy type_istnieje wówczas wartość zmiennej list_type jest przekazywana))
+    # print("abc",flush=True)
+    #print(data,flush=True)
     return data["results"][:how_many] # wywołanie ze słownika  zagnieżdżonego  za pomocą metody: nazwa zmiennej['nazwa klucza'][nr indeksu w  LIŚCIE obiektów]
 
 def get_single_movie(movie_id):
