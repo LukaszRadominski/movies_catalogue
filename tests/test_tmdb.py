@@ -1,6 +1,6 @@
 # import tmdb_client, pytest
-
-from movies_catalogue import tmdb_client 
+import os
+import tmdb_client 
 
 def test_get_poster_url_uses_default_size(): # test: czy funkcja używa domyślnego rozmiaru zdjęcia
    # Przygotowanie danych
