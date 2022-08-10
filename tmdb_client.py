@@ -1,6 +1,7 @@
 import requests
+import os
 
-API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYjgwZTc0OWVhZGI5YjA0NDQ0MTYxYTVlMmMxY2UxZSIsInN1YiI6IjYyOTA4Y2M5ZWQyYWMyMTZiOTAyOTlkYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AqfzLL-wtdgqzIfh5AjyZvIi7b8yrl7B1MOEyGqJFW8"
+API_TOKEN = os.environ.get("TMDB_API_TOKEN", "")
 
 # funkcja, która pobierze dane o najpopularniejszych filmach
 # nalezy stworzyć osobny plik, w którym będziemy przechowywać cały kod odpowiedzialny za komunikację z API : tmdb_client.py
